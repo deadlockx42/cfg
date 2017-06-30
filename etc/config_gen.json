@@ -32,21 +32,42 @@
     },
 
     "Definitions": {
-      "NamedMap": [ "Struct", "Array", "NamedMap", "Map" ]
+      "NamedMap": [
+        { "Name": "Struct",   "Value": "Structure" },
+        { "Name": "Array",    "Value": "String" },
+        { "Name": "NamedMap", "Value": "KeyNameValueArray" },
+        { "Name": "Map",      "Value": "KeyValue" }
+      ]
     },
 
-    "Struct": {
-      "Map": [ "TypeInfo" ]
+    "Structure": {
+      "Map": { "Key": "String", "Value": "TypeInfo" ]
     },
 
-    "Array": "String",
-
-    "NamedMap": {
-      "TODO"
+    "KeyValue": {
+      "Struct": {
+        "Key":    { "Type": "String" },
+        "Value":  { "Type": "String" }
+      }
     },
 
-    "Map": {
-      "TODO"
+    "NameValue": {
+      "Struct": {
+        "Name":  { "Type": "String" },
+        "Value": { "Type": "String" }
+      }
+    },
+
+    "NameValueArray": {
+      "Array": "KeyNameValue"
+    },
+
+    "TypeInfo": {
+      "Struct": {
+        "Type": { "Type": "String" },
+        "Tag":  { "Type": "String" }
+      }
     }
+
   }
 }

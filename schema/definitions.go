@@ -16,26 +16,11 @@
 
 package schema
 
-type Schema interface {
-	Copyright() []string
-	Begin() string
-	Definitions() Definitions
+type Definitions interface {
+	// Struct(string) Structure
+	// Array(string) string
+	// NamedMap(string) KeyValueArray
+	// Map(string) KeyValue
 }
 
-type schema struct {
-	Copyright_   []string     `json:"Copyright"`
-	Begin_       string       `json:"Begin"`
-	Definitions_ *definitions `json:"Definitions"`
-}
-
-func (s *schema) Copyright() []string {
-	return s.Copyright_
-}
-
-func (s *schema) Begin() string {
-	return s.Begin_
-}
-
-func (s *schema) Definitions() Definitions {
-	return s.Definitions_
-}
+type definitions map[string]interface{}
