@@ -1,1 +1,1 @@
-# cfg
+# config_gen
