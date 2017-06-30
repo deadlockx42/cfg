@@ -1,0 +1,59 @@
+{
+  "Begin": "CloudManager",
+
+  "Definitions": {
+
+    "CloudManager": {
+        "Struct": [
+          "Name":       { "Type": "string",     "Tag": "name" },
+          "Title":      { "Type": "string",     "Tag": "title" },
+          "DataCenter": { "Type": "DataCenter", "Tag": "datacenter" }
+        ]
+    },
+
+    "Provider": {
+      "Struct": [
+      ]
+    },
+
+    "DataCenter": {
+      "Struct": [
+        "Name": { "Type": "string", "Tag": "name" }
+      ]
+    },
+
+    "Dns": {
+      "Struct": [
+        "Provider":     { "Type": "Provider",        "Tag": "provider" },
+        "ARecords":     { "Type": "DnsARecords",     "Tag": "a_records" },
+        "CNameRecords": { "Type": "DnsCNameRecords", "Tag": "cname_records" }
+      ]
+    },
+
+    "ARecords": {
+      "Array": "DnsARecord"
+    },
+
+    "CNameRecords": {
+      "Array": "DnsCNameRecord"
+    },
+
+    "ARecord": {
+      "Struct": [
+        "Name":      { "Type": "string", "Tag": "name" },
+        "IPAddress": { "Type": "string", "Tag": "ipaddress" },
+        "Ttl":       { "Type": "int",    "Tag": "ttl" }
+      ]
+    },
+
+    "CNameRecord": {
+      "Struct": [
+        "Name":      { "Type": "string", "Tag": "name" },
+        "Ttl":       { "Type": "int",    "Tag": "ttl" },
+        "Pod":       { "Type": "string", "Tag": "pod",   "Precludes": [ "Alias" ] },
+        "Alias":     { "Type": "string", "Tag": "alias", "Precludes": [ "Pod" ] }
+      ]
+    }
+
+  }
+}
