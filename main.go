@@ -25,7 +25,7 @@ import (
 )
 
 func main() {
-	file, err := os.Open("./etc/cloud.json")
+	file, err := os.Open("./etc/config_gen.json")
 	if err != nil {
 		log.Fatal(err.Error())
 	}

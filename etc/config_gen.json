@@ -41,7 +41,7 @@
     },
 
     "Structure": {
-      "Map": { "Key": "String", "Value": "TypeInfo" ]
+      "Map": { "Key": "String", "Value": "TypeInfo" }
     },
 
     "KeyValue": {
