@@ -19,20 +19,23 @@ package main
 import (
 	"fmt"
 	"log"
-	"strings"
+	"os"
 
-	"github.com/deadlockx42/gen/schema"
+	"github.com/deadlockx42/config_gen/schema"
 )
 
 func main() {
-	const cfg = `
-		{
-			"Begin": "CloudManager"
-		}
-	`
-	s, err := schema.New(strings.NewReader(cfg))
+	file, err := os.Open("./etc/cloud.json")
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	fmt.Printf("Begin: %s\n", s.Begin())
+
+	s, err := schema.New(file)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	for _, c := range s.Copyright() {
+		fmt.Printf("%s\n", c)
+	}
+	fmt.Printf("\n\nBegin: %s\n", s.Begin())
 }
