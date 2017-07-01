@@ -1,1 +1,1 @@
-# config_gen
+# voidgen

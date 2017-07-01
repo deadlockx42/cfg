@@ -21,11 +21,11 @@ import (
 	"log"
 	"os"
 
-	"github.com/deadlockx42/config_gen/schema"
+	"github.com/deadlockx42/voidgen/schema"
 )
 
 func main() {
-	file, err := os.Open("./etc/config_gen.json")
+	file, err := os.Open("./etc/voidgen.json")
 	if err != nil {
 		log.Fatal(err.Error())
 	}
