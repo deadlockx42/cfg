@@ -16,20 +16,4 @@
 
 package schema
 
-type Definitions interface {
-	Objects() Objects
-	Arrays() Arrays
-}
-
-type definitions struct {
-	Objects_ Objects `json:"Objects"`
-	Arrays_  Arrays  `json:"Arrays"`
-}
-
-func (d *definitions) Objects() Objects {
-	return d.Objects_
-}
-
-func (d *definitions) Arrays() Arrays {
-	return d.Arrays_
-}
+type Copyright []string

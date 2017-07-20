@@ -17,18 +17,17 @@
 package schema
 
 type Schema interface {
-	Copyright() []string
+	Copyright() Copyright
 	Begin() string
-	Definitions() Definitions
 }
 
 type schema struct {
-	Copyright_   []string     `json:"Copyright"`
+	Copyright_   Copyright    `json:"Copyright"`
 	Begin_       string       `json:"Begin"`
 	Definitions_ *definitions `json:"Definitions"`
 }
 
-func (s *schema) Copyright() []string {
+func (s *schema) Copyright() Copyright {
 	return s.Copyright_
 }
 
