@@ -16,20 +16,32 @@
 
 package schema
 
-type Definitions interface {
-	Objects() Objects
-	Arrays() Arrays
+type Field interface {
+	Name() string
+	Type() string
+	Tag() string
+	Precludes() Precludes
 }
 
-type definitions struct {
-	Objects_ Objects `json:"Objects"`
-	Arrays_  Arrays  `json:"Arrays"`
+type field struct {
+	Name_      string    `json:"Field"`
+	Type_      string    `json:"Type"`
+	Tag_       string    `json:"Tag"`
+	Precludes_ Precludes `json:"Precludes"`
 }
 
-func (d *definitions) Objects() Objects {
-	return d.Objects_
+func (f *field) Name() string {
+	return f.Name_
 }
 
-func (d *definitions) Arrays() Arrays {
-	return d.Arrays_
+func (f *field) Type() string {
+	return f.Type_
+}
+
+func (f *field) Tag() string {
+	return f.Tag_
+}
+
+func (f *field) Precludes() Precludes {
+	return f.Precludes_
 }

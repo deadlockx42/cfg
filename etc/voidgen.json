@@ -17,57 +17,27 @@
 
   "Begin": "Schema",
 
-  "Definitions": {
+  "Types": {
 
-    "Schema": {
-      "Struct": {
-        "Copyright":   { "Type": "StringArray" },
-        "Begin":       { "Type": "String" },
-        "Definitions": { "Type": "Definitions" }
+    "Structs": [
+      {
+        "Struct": "Schema",
+        "Fields": [
+          { "Field": "Copyright", "Type": "Copyright" },
+          { "Field": "Begin",     "Type": "string" }
+        ]
+      },
+      {
+        "Struct": "Types",
+        "Fields": [
+          { "Field": "Structs", "Type": "Struct" },
+          { "Field": "Arrays", "Type":  "Arrays" }
+        ]
       }
-    },
+    ],
 
-    "StringArray": {
-      "Array": "String"
-    },
-
-    "Definitions": {
-      "NamedMap": [
-        { "Name": "Struct",   "Value": "Structure" },
-        { "Name": "Array",    "Value": "String" },
-        { "Name": "NamedMap", "Value": "KeyNameValueArray" },
-        { "Name": "Map",      "Value": "KeyValue" }
-      ]
-    },
-
-    "Structure": {
-      "Map": { "Key": "String", "Value": "TypeInfo" }
-    },
-
-    "KeyValue": {
-      "Struct": {
-        "Key":    { "Type": "String" },
-        "Value":  { "Type": "String" }
-      }
-    },
-
-    "NameValue": {
-      "Struct": {
-        "Name":  { "Type": "String" },
-        "Value": { "Type": "String" }
-      }
-    },
-
-    "NameValueArray": {
-      "Array": "KeyNameValue"
-    },
-
-    "TypeInfo": {
-      "Struct": {
-        "Type": { "Type": "String" },
-        "Tag":  { "Type": "String" }
-      }
-    }
-
+    "Arrays": [
+      { "Array": "Copyright", "Type": "string" }
+    ]
   }
 }

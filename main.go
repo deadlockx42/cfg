@@ -17,6 +17,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -25,12 +26,28 @@ import (
 )
 
 func main() {
-	file, err := os.Open("./etc/voidgen.json")
+
+	var file, output string
+
+	flag.StringVar(&file, "file", "", "input scheman file")
+	flag.StringVar(&file, "f", "", "input scheman file")
+	flag.StringVar(&output, "output", ".", "output directory")
+	flag.StringVar(&output, "o", ".", "output directory")
+
+	flag.Parse()
+
+	f, err := os.Open(file)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	s, err := schema.New(file)
+	if output != "." {
+		if err := os.Mkdir(output, 0644); err != nil {
+			log.Fatal(err.Error())
+		}
+	}
+
+	s, err := schema.New(f)
 	if err != nil {
 		log.Fatal(err.Error())
 	}

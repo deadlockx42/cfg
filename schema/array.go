@@ -16,20 +16,20 @@
 
 package schema
 
-type Definitions interface {
-	Objects() Objects
-	Arrays() Arrays
+type Array interface {
+	Name() string
+	Type() string
 }
 
-type definitions struct {
-	Objects_ Objects `json:"Objects"`
-	Arrays_  Arrays  `json:"Arrays"`
+type array struct {
+	Name_ string `json:"Array"`
+	Type_ string `json:"Type"`
 }
 
-func (d *definitions) Objects() Objects {
-	return d.Objects_
+func (a *array) Name() string {
+	return a.Name_
 }
 
-func (d *definitions) Arrays() Arrays {
-	return d.Arrays_
+func (a *array) Type() string {
+	return a.Type_
 }
