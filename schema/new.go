@@ -21,6 +21,7 @@ import (
 	"io"
 )
 
+// New creates a schema.
 func New(r io.Reader) (Schema, error) {
 	var s schema
 	for {

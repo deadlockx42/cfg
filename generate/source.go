@@ -14,7 +14,30 @@
 //   limitations under the License.
 //
 
-package schema
+package generate
 
-// Objects is an array of object.
-type Objects []*object
+import (
+	"fmt"
+	"os"
+)
+
+type source struct {
+	copyright []string
+	pkg       string
+	file      *os.File
+}
+
+func newSource(copyright []string, pkg, output string) (*source, error) {
+	name := filename(pkg)
+	fmt.Println(name)
+	file, err := os.Open(name)
+	if err != nil {
+		return nil, err
+	}
+
+	return &source{
+		copyright: copyright,
+		pkg:       pkg,
+		file:      file,
+	}, nil
+}

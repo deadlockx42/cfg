@@ -16,20 +16,21 @@
 
 package schema
 
+// Array has a name and a type.
 type Array interface {
 	Name() string
 	Type() string
 }
 
 type array struct {
-	Name_ string `json:"Array"`
-	Type_ string `json:"Type"`
+	ArrayName string `json:"Array"`
+	ArrayType string `json:"Type"`
 }
 
 func (a *array) Name() string {
-	return a.Name_
+	return a.ArrayName
 }
 
 func (a *array) Type() string {
-	return a.Type_
+	return a.ArrayType
 }

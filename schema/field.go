@@ -16,6 +16,7 @@
 
 package schema
 
+// Field represents an element of an object. It contains a name, type, tag and precludes.
 type Field interface {
 	Name() string
 	Type() string
@@ -24,24 +25,24 @@ type Field interface {
 }
 
 type field struct {
-	Name_      string    `json:"Field"`
-	Type_      string    `json:"Type"`
-	Tag_       string    `json:"Tag"`
-	Precludes_ Precludes `json:"Precludes"`
+	FieldName      string    `json:"Field"`
+	FieldType      string    `json:"Type"`
+	FieldTag       string    `json:"Tag"`
+	FieldPrecludes Precludes `json:"Precludes"`
 }
 
 func (f *field) Name() string {
-	return f.Name_
+	return f.FieldName
 }
 
 func (f *field) Type() string {
-	return f.Type_
+	return f.FieldType
 }
 
 func (f *field) Tag() string {
-	return f.Tag_
+	return f.FieldTag
 }
 
 func (f *field) Precludes() Precludes {
-	return f.Precludes_
+	return f.FieldPrecludes
 }

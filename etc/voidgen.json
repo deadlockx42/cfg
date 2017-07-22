@@ -17,27 +17,55 @@
 
   "Begin": "Schema",
 
-  "Types": {
+  "Definitions": {
 
-    "Structs": [
+    "Objects": [
       {
-        "Struct": "Schema",
+        "Object": "Schema",
         "Fields": [
-          { "Field": "Copyright", "Type": "Copyright" },
-          { "Field": "Begin",     "Type": "string" }
+          { "Field": "Copyright",   "Type": "Copyright" },
+          { "Field": "Begin",       "Type": "string" },
+          { "Field": "Definitions", "Type": "Definitions" }
         ]
       },
       {
-        "Struct": "Types",
+        "Object": "Definitions",
         "Fields": [
-          { "Field": "Structs", "Type": "Struct" },
+          { "Field": "Objects", "Type": "Object" },
           { "Field": "Arrays", "Type":  "Arrays" }
+        ]
+      },
+      {
+        "Object": "Object",
+        "Fields": [
+          { "Field": "Name",   "Type": "string", "Tag": "Object" },
+          { "Field": "Fields", "Type": "Fields" }
+        ]
+      },
+      {
+        "Object": "Array",
+        "Fields": [
+          { "Field": "Name",   "Type": "string", "Tag": "Array" },
+          { "Field": "Fields", "Type": "Fields" }
+        ]
+      },
+      {
+        "Object": "Field",
+        "Fields": [
+          { "Field": "Name",      "Type": "string", "Tag": "Field" },
+          { "Field": "Type",      "Type": "string" },
+          { "Field": "Tag",       "Type": "string" },
+          { "Field": "Precludes", "Type": "Precludes" }
         ]
       }
     ],
 
     "Arrays": [
-      { "Array": "Copyright", "Type": "string" }
+      { "Array": "Copyright", "Type": "string" },
+      { "Array": "Objects",   "Type": "Object" },
+      { "Array": "Arrays",    "Type": "Array" },
+      { "Field": "Fields",    "Type": "Field" },
+      { "Field": "Precludes", "Type": "string" }
     ]
   }
 }

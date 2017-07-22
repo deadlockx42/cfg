@@ -14,7 +14,36 @@
 //   limitations under the License.
 //
 
-package schema
+package generate
 
-// Objects is an array of object.
-type Objects []*object
+import (
+	"strings"
+	"unicode"
+)
+
+func filename(n string) string {
+	f := strings.TrimSpace(n)
+	f = strings.Replace(f, " ", "_", -1)
+	f += ".go"
+
+	s := []rune{}
+	var prev rune
+	first := true
+
+	for _, c := range f {
+		if unicode.IsUpper(c) {
+			if first {
+				first = false
+			} else {
+				if prev != '_' {
+					s = append(s, rune('_'))
+				}
+			}
+			s = append(s, unicode.ToLower(c))
+		} else {
+			s = append(s, c)
+		}
+		prev = c
+	}
+	return string(s)
+}

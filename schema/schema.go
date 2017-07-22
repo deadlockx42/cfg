@@ -16,25 +16,26 @@
 
 package schema
 
+// Schema is a definition of the schema to generate.
 type Schema interface {
 	Copyright() Copyright
 	Begin() string
 }
 
 type schema struct {
-	Copyright_   Copyright    `json:"Copyright"`
-	Begin_       string       `json:"Begin"`
-	Definitions_ *definitions `json:"Definitions"`
+	SchemaCopyright   Copyright    `json:"Copyright"`
+	SchemaBegin       string       `json:"Begin"`
+	SchemaDefinitions *definitions `json:"Definitions"`
 }
 
 func (s *schema) Copyright() Copyright {
-	return s.Copyright_
+	return s.SchemaCopyright
 }
 
 func (s *schema) Begin() string {
-	return s.Begin_
+	return s.SchemaBegin
 }
 
 func (s *schema) Definitions() Definitions {
-	return s.Definitions_
+	return s.SchemaDefinitions
 }

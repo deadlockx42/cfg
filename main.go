@@ -18,22 +18,19 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"os"
 
+	"github.com/deadlockx42/voidgen/generate"
 	"github.com/deadlockx42/voidgen/schema"
 )
 
 func main() {
-
 	var file, output string
-
 	flag.StringVar(&file, "file", "", "input scheman file")
 	flag.StringVar(&file, "f", "", "input scheman file")
 	flag.StringVar(&output, "output", ".", "output directory")
 	flag.StringVar(&output, "o", ".", "output directory")
-
 	flag.Parse()
 
 	f, err := os.Open(file)
@@ -51,8 +48,14 @@ func main() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	for _, c := range s.Copyright() {
-		fmt.Printf("%s\n", c)
+
+	g, err := generate.New(s)
+	if err != nil {
+		log.Fatal(err.Error())
 	}
-	fmt.Printf("\n\nBegin: %s\n", s.Begin())
+
+	err = g.Write(output)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 }

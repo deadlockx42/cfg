@@ -16,4 +16,5 @@
 
 package schema
 
+// Fields is a slice of field.
 type Fields []*field

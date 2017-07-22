@@ -16,4 +16,5 @@
 
 package schema
 
+// Arrays is a map of arrays.
 type Arrays []*array

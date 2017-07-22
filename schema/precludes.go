@@ -16,4 +16,6 @@
 
 package schema
 
+// Precludes is an array of strings. If a field has a precludes element
+// this means that the existence of the field precludes those in the list.
 type Precludes []string

@@ -16,4 +16,5 @@
 
 package schema
 
+// Copyright holds the copyright for the generated code. It is an slice of strings.
 type Copyright []string

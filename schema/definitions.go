@@ -16,20 +16,21 @@
 
 package schema
 
+// Definitions holds a list of objects and arrays.
 type Definitions interface {
 	Objects() Objects
 	Arrays() Arrays
 }
 
 type definitions struct {
-	Objects_ Objects `json:"Objects"`
-	Arrays_  Arrays  `json:"Arrays"`
+	DefinitionsObjects Objects `json:"Objects"`
+	DefinitionsArrays  Arrays  `json:"Arrays"`
 }
 
 func (d *definitions) Objects() Objects {
-	return d.Objects_
+	return d.DefinitionsObjects
 }
 
 func (d *definitions) Arrays() Arrays {
-	return d.Arrays_
+	return d.DefinitionsArrays
 }

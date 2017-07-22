@@ -16,20 +16,21 @@
 
 package schema
 
+// Object contains a name and a set of fields.
 type Object interface {
 	Name() string
 	Fields() Fields
 }
 
 type object struct {
-	Name_   string `json:"Object"`
-	Fields_ Fields
+	ObjectName   string `json:"Object"`
+	ObjectFields Fields `json:"Fields"`
 }
 
 func (o *object) Name() string {
-	return o.Name_
+	return o.ObjectName
 }
 
 func (o *object) Fields() Fields {
-	return o.Fields_
+	return o.ObjectFields
 }

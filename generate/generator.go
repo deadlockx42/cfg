@@ -14,7 +14,32 @@
 //   limitations under the License.
 //
 
-package schema
+package generate
 
-// Objects is an array of object.
-type Objects []*object
+import (
+	"fmt"
+	"os"
+
+	"github.com/deadlockx42/voidgen/schema"
+)
+
+// Generator TODO
+type Generator struct {
+	s schema.Schema
+}
+
+// New creates a generator.
+func New(s schema.Schema) (*Generator, error) {
+	return &Generator{s}, nil
+}
+
+func (g *Generator) Write(output string) error {
+	err := os.MkdirAll(output, 0755)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("%s\n", filename(g.s.Begin()))
+
+	return nil
+}
