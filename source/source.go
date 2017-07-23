@@ -14,36 +14,32 @@
 //   limitations under the License.
 //
 
-package generate
+package source
 
 import (
+	"io"
 	"strings"
-	"unicode"
+
+	"github.com/deadlockx42/voidgen/schema"
 )
 
-func filename(n string) string {
-	f := strings.TrimSpace(n)
-	f = strings.Replace(f, " ", "_", -1)
-	f += ".go"
+type source struct {
+	copyright []string
+	pkg       string
+}
 
-	s := []rune{}
-	var prev rune
-	first := true
-
-	for _, c := range f {
-		if unicode.IsUpper(c) {
-			if first {
-				first = false
-			} else {
-				if prev != '_' {
-					s = append(s, rune('_'))
-				}
-			}
-			s = append(s, unicode.ToLower(c))
-		} else {
-			s = append(s, c)
-		}
-		prev = c
+func newSource(pkg string, s schema.Schema) *source {
+	return &source{
+		copyright: s.Copyright(),
+		pkg:       pkg,
 	}
-	return string(s)
+}
+
+func (s *source) Write(w io.Writer) (n int, err error) {
+	b := []byte{}
+	for _, c := range s.copyright {
+		b = append(b, []byte(strings.TrimSpace("//   "+c)+"\n")...)
+	}
+	b = append(b, []byte("\npackage "+s.pkg+"\n")...)
+	return w.Write(b)
 }

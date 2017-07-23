@@ -14,29 +14,40 @@
 //   limitations under the License.
 //
 
-package schema
+package source
 
-// Schema is a definition of the schema to generate.
-type Schema interface {
-	Copyright() Copyright
-	Begin() string
-	Definitions() Definitions
+import (
+	// "fmt"
+	"io"
+	// "strings"
+
+	"github.com/deadlockx42/voidgen/schema"
+)
+
+type arraySrc struct {
+	*source
+	schema schema.Schema
+	array  schema.Array
 }
 
-type schema struct {
-	SchemaCopyright   Copyright    `json:"Copyright"`
-	SchemaBegin       string       `json:"Begin"`
-	SchemaDefinitions *definitions `json:"Definitions"`
+func Array(pkg string, s schema.Schema, a schema.Array) *arraySrc {
+	return &arraySrc{
+		source: &source{
+			copyright: s.Copyright(),
+			pkg:       pkg,
+		},
+		schema: s,
+		array:  a,
+	}
 }
 
-func (s *schema) Copyright() Copyright {
-	return s.SchemaCopyright
-}
+func (s *arraySrc) Write(w io.Writer) (int, error) {
+	n, err := s.source.Write(w)
+	if err != nil {
+		return n, err
+	}
 
-func (s *schema) Begin() string {
-	return s.SchemaBegin
-}
-
-func (s *schema) Definitions() Definitions {
-	return s.SchemaDefinitions
+	b := []byte{}
+	// TODO
+	return w.Write(b)
 }

@@ -14,30 +14,40 @@
 //   limitations under the License.
 //
 
-package generate
+package source
 
 import (
-	"fmt"
-	"os"
+	// "fmt"
+	"io"
+	// "strings"
+
+	"github.com/deadlockx42/voidgen/schema"
 )
 
-type source struct {
-	copyright []string
-	pkg       string
-	file      *os.File
+type objectSrc struct {
+	*source
+	schema schema.Schema
+	object schema.Object
 }
 
-func newSource(copyright []string, pkg, output string) (*source, error) {
-	name := filename(pkg)
-	fmt.Println(name)
-	file, err := os.Open(name)
+func Object(pkg string, s schema.Schema, o schema.Object) *objectSrc {
+	return &objectSrc{
+		source: &source{
+			copyright: s.Copyright(),
+			pkg:       pkg,
+		},
+		schema: s,
+		object: o,
+	}
+}
+
+func (s *objectSrc) Write(w io.Writer) (int, error) {
+	n, err := s.source.Write(w)
 	if err != nil {
-		return nil, err
+		return n, err
 	}
 
-	return &source{
-		copyright: copyright,
-		pkg:       pkg,
-		file:      file,
-	}, nil
+	b := []byte{}
+	// TODO
+	return w.Write(b)
 }

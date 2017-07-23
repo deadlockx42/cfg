@@ -14,32 +14,27 @@
 //   limitations under the License.
 //
 
-package generate
+package source
 
 import (
-	"fmt"
-	"os"
+	"io"
 
 	"github.com/deadlockx42/voidgen/schema"
 )
 
-// Generator TODO
-type Generator struct {
-	s schema.Schema
+type docSrc struct {
+	*source
 }
 
-// New creates a generator.
-func New(s schema.Schema) (*Generator, error) {
-	return &Generator{s}, nil
-}
-
-func (g *Generator) Write(output string) error {
-	err := os.MkdirAll(output, 0755)
-	if err != nil {
-		return err
+func Doc(pkg string, s schema.Schema) *docSrc {
+	return &docSrc{
+		source: &source{
+			copyright: s.Copyright(),
+			pkg:       pkg,
+		},
 	}
+}
 
-	fmt.Printf("%s\n", filename(g.s.Begin()))
-
-	return nil
+func (d *docSrc) Write(w io.Writer) (n int, err error) {
+	return d.source.Write(w)
 }

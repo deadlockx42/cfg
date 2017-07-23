@@ -21,7 +21,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/deadlockx42/voidgen/generate"
 	"github.com/deadlockx42/voidgen/schema"
 )
 
@@ -29,19 +28,20 @@ func main() {
 	var file, output string
 	flag.StringVar(&file, "file", "", "input scheman file")
 	flag.StringVar(&file, "f", "", "input scheman file")
-	flag.StringVar(&output, "output", ".", "output directory")
-	flag.StringVar(&output, "o", ".", "output directory")
+	flag.StringVar(&output, "output", "", "output directory")
+	flag.StringVar(&output, "o", "", "output directory")
 	flag.Parse()
+
+	if output == "" {
+		log.Fatal("Output directory required.")
+	}
+	if output == "." || output == ".." {
+		log.Fatalf("Output directory %q not allowed.", output)
+	}
 
 	f, err := os.Open(file)
 	if err != nil {
 		log.Fatal(err.Error())
-	}
-
-	if output != "." {
-		if err := os.Mkdir(output, 0644); err != nil {
-			log.Fatal(err.Error())
-		}
 	}
 
 	s, err := schema.New(f)
@@ -49,12 +49,7 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	g, err := generate.New(s)
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-
-	err = g.Write(output)
+	err = render(s, output)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
