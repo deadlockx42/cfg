@@ -25,7 +25,7 @@
     {
       "Object": "Generator",
       "Documentation": [
-        "Generator TODO"
+        "Generator generates go code based on a json definition file."
       ],
       "Fields": [
         { "Field": "Name",          "Type": "string" },

@@ -38,7 +38,6 @@ func newMaps(g Generator) error {
 	return nil
 }
 
-// VisitGenerator does nothing.
 func (*genmaps) VisitGenerator(Generator) error {
 	return nil
 }

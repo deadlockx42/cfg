@@ -16,7 +16,7 @@
 
 package generate
 
-// Generator TODO
+// Generator generates go code based on a json definition file.
 type Generator interface {
 	Acceptor
 	Name() string

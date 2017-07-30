@@ -21,11 +21,14 @@ import (
 	"io"
 )
 
+// Initializiers allow for additional functionality to be created as part of the
+// generator construction. To take advantage of this, append an initializer
+// function to the initializers slice in an init() function.
 type initializer func(Generator) error
 
 var initializers []initializer
 
-// New creates a generate.
+// New creates a generator.
 func New(r io.Reader) (Generator, error) {
 	g := &generator{}
 	for {

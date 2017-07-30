@@ -37,7 +37,6 @@ func main() {
 	flag.Parse()
 
 	args := flag.Args()
-
 	if len(args) != 1 {
 		usage()
 	}
@@ -46,12 +45,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-
 	g, err := generate.New(f)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-
 	r, err := generate.Validate(g)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -61,5 +58,12 @@ func main() {
 	}
 	for _, e := range r.Errors {
 		fmt.Printf("Error: %s\n", e)
+	}
+	if len(r.Errors) != 0 {
+		os.Exit(1)
+	}
+	err = generate.Generate(g)
+	if err != nil {
+		log.Fatal(err.Error())
 	}
 }

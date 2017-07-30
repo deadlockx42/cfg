@@ -16,33 +16,7 @@
 
 package generate
 
-// Array has a name, a type and documentation. Array also satisfies the
-// Acceptor interface allowing a Visitor access.
-type Array interface {
-	Acceptor
-	Name() string
-	Type() string
-	Documentation() Text
-}
-
-type array struct {
-	AName          string `json:"Array"`
-	AType          string `json:"Type"`
-	ADocumentation Text   `json:"Documentation"`
-}
-
-func (a *array) Accept(v Visitor) error {
-	return v.VisitArray(a)
-}
-
-func (a *array) Name() string {
-	return a.AName
-}
-
-func (a *array) Type() string {
-	return a.AType
-}
-
-func (a *array) Documentation() Text {
-	return a.ADocumentation
+// Generate creates the code.
+func Generate(g Generator) error {
+	return nil
 }
