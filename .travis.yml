@@ -16,4 +16,4 @@ script:
 notifications:
  slack:
    rooms:
-     - deadlockx42:VMYlpSZ3ngCaWxftv60PULnC#dev
+    - deadlockx42:APY2n5wySNi22t1AvUefBjy8#build
