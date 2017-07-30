@@ -19,6 +19,7 @@ package generate
 // Objects is an array of object.
 type Objects []*object
 
+// Accept allows the visitor to visit all the objects.
 func (o Objects) Accept(v Visitor) error {
 	for _, i := range o {
 		if err := i.Accept(v); err != nil {

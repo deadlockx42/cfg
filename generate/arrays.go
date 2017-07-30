@@ -19,6 +19,7 @@ package generate
 // Arrays is a map of arrays.
 type Arrays []*array
 
+// Accept allows the visitor to visit all the arrays.
 func (a Arrays) Accept(v Visitor) error {
 	for _, i := range a {
 		if err := i.Accept(v); err != nil {

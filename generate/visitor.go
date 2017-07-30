@@ -16,10 +16,12 @@
 
 package generate
 
+// Acceptor allows a visitor to visit.
 type Acceptor interface {
 	Accept(Visitor) error
 }
 
+// Visitor can visit a generator, an object or an array.
 type Visitor interface {
 	VisitGenerator(g Generator) error
 	VisitObject(o Object) error

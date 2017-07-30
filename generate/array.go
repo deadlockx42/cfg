@@ -16,7 +16,8 @@
 
 package generate
 
-// Array has a name and a type.
+// Array has a name, a type and documentation.
+// Array also satisfies the Acceptor interface allowing a Visitor access.
 type Array interface {
 	Acceptor
 	Name() string

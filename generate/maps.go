@@ -38,15 +38,18 @@ func newMaps(g Generator) error {
 	return nil
 }
 
+// VisitGenerator does nothing.
 func (*genmaps) VisitGenerator(Generator) error {
 	return nil
 }
 
+// VisitObject add the object to the object map.
 func (m *genmaps) VisitObject(o Object) error {
 	m.objects[o.Name()] = o
 	return nil
 }
 
+// VisitArray add the array to the array map.
 func (m *genmaps) VisitArray(a Array) error {
 	m.arrays[a.Name()] = a
 	return nil

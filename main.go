@@ -17,6 +17,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -31,11 +32,17 @@ func usage() {
 }
 
 func main() {
-	if len(os.Args) != 2 {
+	force := false
+	flag.BoolVar(&force, "f", false, "force use of existing package directory")
+	flag.Parse()
+
+	args := flag.Args()
+
+	if len(args) != 1 {
 		usage()
 	}
 
-	f, err := os.Open(os.Args[1])
+	f, err := os.Open(args[0])
 	if err != nil {
 		log.Fatal(err.Error())
 	}
@@ -44,6 +51,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+
 	r, err := generate.Validate(g)
 	if err != nil {
 		log.Fatal(err.Error())

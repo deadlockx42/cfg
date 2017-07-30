@@ -16,7 +16,8 @@
 
 package generate
 
-// Object contains a name and a set of fields.
+// Object contains a name, documentation, a set of fields and an acceptor flag.
+// Object also satisfies the Acceptor interface allowing a Visitor access.
 type Object interface {
 	Acceptor
 	Name() string
