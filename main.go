@@ -17,40 +17,52 @@
 package main
 
 import (
-	"flag"
+	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 
-	"github.com/deadlockx42/voidgen/schema"
+	"github.com/deadlockx42/voidgen/generate"
 )
 
+var (
+	verbose bool
+)
+
+func usage() {
+	fmt.Fprintf(os.Stderr, "usage: %s file\n", filepath.Base(os.Args[0]))
+	os.Exit(1)
+}
+
 func main() {
-	var file, output string
-	flag.StringVar(&file, "file", "", "input scheman file")
-	flag.StringVar(&file, "f", "", "input scheman file")
-	flag.StringVar(&output, "output", "", "output directory")
-	flag.StringVar(&output, "o", "", "output directory")
-	flag.Parse()
-
-	if output == "" {
-		log.Fatal("Output directory required.")
-	}
-	if output == "." || output == ".." {
-		log.Fatalf("Output directory %q not allowed.", output)
+	if len(os.Args) != 2 {
+		usage()
 	}
 
-	f, err := os.Open(file)
+	f, err := os.Open(os.Args[1])
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	s, err := schema.New(f)
+	g, err := generate.New(f)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	err = render(s, output)
+	m, err := generate.NewMaps(g)
 	if err != nil {
 		log.Fatal(err.Error())
+	}
+
+	results, err := generate.Validate(g, m)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	for _, w := range results.Warnings {
+		fmt.Printf("Warning: %s\n", w)
+	}
+	for _, e := range results.Errors {
+		fmt.Printf("Error: %s\n", e)
 	}
 }

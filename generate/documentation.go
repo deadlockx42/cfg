@@ -14,27 +14,7 @@
 //   limitations under the License.
 //
 
-package source
+package generate
 
-import (
-	"io"
-
-	"github.com/deadlockx42/voidgen/schema"
-)
-
-type docSrc struct {
-	*source
-}
-
-func Doc(pkg string, s schema.Schema) *docSrc {
-	return &docSrc{
-		source: &source{
-			copyright: s.Copyright(),
-			pkg:       pkg,
-		},
-	}
-}
-
-func (d *docSrc) Write(w io.Writer) (n int, err error) {
-	return d.source.Write(w)
-}
+// Documentation holds the documentation string for the associate object or array.
+type Documentation []string

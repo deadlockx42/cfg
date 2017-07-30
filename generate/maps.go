@@ -14,7 +14,34 @@
 //   limitations under the License.
 //
 
-package schema
+package generate
 
-// Copyright holds the copyright for the generated code. It is an slice of strings.
-type Copyright []string
+type Maps struct {
+	Objects map[string]Object
+	Arrays  map[string]Array
+}
+
+func NewMaps(g Generator) (*Maps, error) {
+	m := &Maps{
+		Objects: map[string]Object{},
+		Arrays:  map[string]Array{},
+	}
+	if err := g.Accept(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (*Maps) VisitGenerator(Generator) error {
+	return nil
+}
+
+func (m *Maps) VisitObject(o Object) error {
+	m.Objects[o.Name()] = o
+	return nil
+}
+
+func (m *Maps) VisitArray(a Array) error {
+	m.Arrays[a.Name()] = a
+	return nil
+}

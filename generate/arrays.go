@@ -14,40 +14,16 @@
 //   limitations under the License.
 //
 
-package source
+package generate
 
-import (
-	// "fmt"
-	"io"
-	// "strings"
+// Arrays is a map of arrays.
+type Arrays []*array
 
-	"github.com/deadlockx42/voidgen/schema"
-)
-
-type objectSrc struct {
-	*source
-	schema schema.Schema
-	object schema.Object
-}
-
-func Object(pkg string, s schema.Schema, o schema.Object) *objectSrc {
-	return &objectSrc{
-		source: &source{
-			copyright: s.Copyright(),
-			pkg:       pkg,
-		},
-		schema: s,
-		object: o,
+func (a Arrays) Accept(v Visitor) error {
+	for _, i := range a {
+		if err := i.Accept(v); err != nil {
+			return err
+		}
 	}
-}
-
-func (s *objectSrc) Write(w io.Writer) (int, error) {
-	n, err := s.source.Write(w)
-	if err != nil {
-		return n, err
-	}
-
-	b := []byte{}
-	// TODO
-	return w.Write(b)
+	return nil
 }

@@ -14,24 +14,35 @@
 //   limitations under the License.
 //
 
-package schema
+package generate
 
-import (
-	"encoding/json"
-	"io"
-)
+// Field represents an element of an object. It contains a name, type, tag and precludes.
+type Field interface {
+	Name() string
+	Type() string
+	Tag() string
+	Precludes() Precludes
+}
 
-// New creates a schema.
-func New(r io.Reader) (Schema, error) {
-	var s schema
-	for {
-		err := json.NewDecoder(r).Decode(&s)
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			return nil, err
-		}
-	}
-	return &s, nil
+type field struct {
+	FName      string    `json:"Field"`
+	FType      string    `json:"Type"`
+	FTag       string    `json:"Tag"`
+	FPrecludes Precludes `json:"Precludes"`
+}
+
+func (f *field) Name() string {
+	return f.FName
+}
+
+func (f *field) Type() string {
+	return f.FType
+}
+
+func (f *field) Tag() string {
+	return f.FTag
+}
+
+func (f *field) Precludes() Precludes {
+	return f.FPrecludes
 }

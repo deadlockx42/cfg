@@ -14,35 +14,22 @@
 //   limitations under the License.
 //
 
-package schema
+package generate
 
-// Field represents an element of an object. It contains a name, type, tag and precludes.
-type Field interface {
-	Name() string
-	Type() string
-	Tag() string
-	Precludes() Precludes
+type Acceptor interface {
+	Accept(Visitor) error
 }
 
-type field struct {
-	FieldName      string    `json:"Field"`
-	FieldType      string    `json:"Type"`
-	FieldTag       string    `json:"Tag"`
-	FieldPrecludes Precludes `json:"Precludes"`
+type VisitorError struct {
+	string
 }
 
-func (f *field) Name() string {
-	return f.FieldName
+func (e VisitorError) Error() string {
+	return e.string
 }
 
-func (f *field) Type() string {
-	return f.FieldType
-}
-
-func (f *field) Tag() string {
-	return f.FieldTag
-}
-
-func (f *field) Precludes() Precludes {
-	return f.FieldPrecludes
+type Visitor interface {
+	VisitGenerator(g Generator) error
+	VisitObject(o Object) error
+	VisitArray(a Array) error
 }

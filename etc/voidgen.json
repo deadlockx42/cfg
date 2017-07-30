@@ -1,4 +1,6 @@
 {
+  "Name": "generate",
+
   "Copyright": [
     "",
     "Copyright 2017 Deadlock X42 <deadlock.x42@gmail.com>",
@@ -17,57 +19,93 @@
     ""
   ],
 
-  "Begin": "Schema",
+  "Begin": "Generator",
 
-  "Definitions": {
+  "Objects": [
+    {
+      "Object": "Generator",
+      "Documentation": [
+        "Generator TODO"
+      ],
+      "Fields": [
+        { "Field": "Name",          "Type": "string" },
+        { "Field": "Documentation", "Type": "Text" },
+        { "Field": "Copyright",     "Type": "Text" },
+        { "Field": "Begin",         "Type": "string" },
+        { "Field": "Objects",       "Type": "Object" },
+        { "Field": "Arrays",        "Type": "Arrays" }
+      ]
+    },
+    {
+      "Object": "Object",
+      "Documentation": [
+        "Object represents a composite data type containing the name of the object,",
+        "the documentation for the object and the fields of the object."
+      ],
+      "Fields": [
+        { "Field": "Name",          "Type": "string", "Tag": "Object" },
+        { "Field": "Documentation", "Type": "Text" },
+        { "Field": "Fields",        "Type": "Fields" }
+      ]
+    },
+    {
+      "Object": "Array",
+      "Documentation": [
+        "Array represents a sequence of the same data type which contains the name of the",
+        "array, the element type and the documentation text."
+      ],
+      "Fields": [
+        { "Field": "Name",          "Type": "string", "Tag": "Array" },
+        { "Field": "Type",          "Type": "string" },
+        { "Field": "Documentation", "Type": "Text" }
+      ]
+    },
+    {
+      "Object": "Field",
+      "Documentation": [
+        "Field represents a data element held by an object. It contains the mandatory fields",
+        "name and type. Optional fields include the tag and precludes. The name is the exported",
+        "name and must be capitalized. The type can be a native go type or can be a derived type.",
+        "The tag is the name used in the corresponding json to represent the field. And finally",
+        "the precludes is a list of optional field name where those fields cannot be present if",
+        "this field is present."
+      ],
+      "Fields": [
+        { "Field": "Name",      "Type": "string", "Tag": "Field" },
+        { "Field": "Type",      "Type": "string" },
+        { "Field": "Tag",       "Type": "string" },
+        { "Field": "Precludes", "Type": "Precludes" }
+      ]
+    }
+  ],
 
-    "Objects": [
-      {
-        "Object": "Schema",
-        "Fields": [
-          { "Field": "Copyright",   "Type": "Copyright" },
-          { "Field": "Begin",       "Type": "string" },
-          { "Field": "Definitions", "Type": "Definitions" }
-        ]
-      },
-      {
-        "Object": "Definitions",
-        "Fields": [
-          { "Field": "Objects", "Type": "Object" },
-          { "Field": "Arrays", "Type":  "Arrays" }
-        ]
-      },
-      {
-        "Object": "Object",
-        "Fields": [
-          { "Field": "Name",   "Type": "string", "Tag": "Object" },
-          { "Field": "Fields", "Type": "Fields" }
-        ]
-      },
-      {
-        "Object": "Array",
-        "Fields": [
-          { "Field": "Name",   "Type": "string", "Tag": "Array" },
-          { "Field": "Fields", "Type": "Fields" }
-        ]
-      },
-      {
-        "Object": "Field",
-        "Fields": [
-          { "Field": "Name",      "Type": "string", "Tag": "Field" },
-          { "Field": "Type",      "Type": "string" },
-          { "Field": "Tag",       "Type": "string" },
-          { "Field": "Precludes", "Type": "Precludes" }
-        ]
-      }
-    ],
-
-    "Arrays": [
-      { "Array": "Copyright", "Type": "string" },
-      { "Array": "Objects",   "Type": "Object" },
-      { "Array": "Arrays",    "Type": "Array" },
-      { "Field": "Fields",    "Type": "Field" },
-      { "Field": "Precludes", "Type": "string" }
-    ]
-  }
+  "Arrays": [
+    { "Array": "Text", "Type": "string",
+      "Documentation": [
+        "Text is simply a slice of strings."
+      ]
+    },
+    { "Array": "Objects", "Type": "Object",
+      "Documentation": [
+        "Objects is a slice of objects."
+      ]
+    },
+    { "Array": "Arrays", "Type": "Array",
+      "Documentation": [
+        "Arrays is a slice of arrays."
+      ]
+    },
+    { "Array": "Fields", "Type": "Field",
+      "Documentation": [
+        "Fields is a slice of field. Each field represent a data element held by an object."
+      ]
+    },
+    { "Array": "Precludes", "Type": "string",
+      "Documentation": [
+        "Precludes is a list of strings, where each string is the name of a field other than the current",
+        "field. The precluded fields must not be present in the definition of the object if the current",
+        "field is present."
+      ]
+    }
+  ]
 }

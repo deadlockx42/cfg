@@ -14,32 +14,34 @@
 //   limitations under the License.
 //
 
-package source
+package generate
 
-import (
-	"io"
-	"strings"
-
-	"github.com/deadlockx42/voidgen/schema"
-)
-
-type source struct {
-	copyright []string
-	pkg       string
+// Array has a name and a type.
+type Array interface {
+	Acceptor
+	Name() string
+	Type() string
+	Documentation() Text
 }
 
-func newSource(pkg string, s schema.Schema) *source {
-	return &source{
-		copyright: s.Copyright(),
-		pkg:       pkg,
-	}
+type array struct {
+	AName          string `json:"Array"`
+	AType          string `json:"Type"`
+	ADocumentation Text   `json:"Documentation"`
 }
 
-func (s *source) Write(w io.Writer) (n int, err error) {
-	b := []byte{}
-	for _, c := range s.copyright {
-		b = append(b, []byte(strings.TrimSpace("//   "+c)+"\n")...)
-	}
-	b = append(b, []byte("\npackage "+s.pkg+"\n")...)
-	return w.Write(b)
+func (a *array) Accept(v Visitor) error {
+	return v.VisitArray(a)
+}
+
+func (a *array) Name() string {
+	return a.AName
+}
+
+func (a *array) Type() string {
+	return a.AType
+}
+
+func (a *array) Documentation() Text {
+	return a.ADocumentation
 }

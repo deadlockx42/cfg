@@ -14,7 +14,24 @@
 //   limitations under the License.
 //
 
-package schema
+package generate
 
-// Objects is an array of object.
-type Objects []*object
+import (
+	"encoding/json"
+	"io"
+)
+
+// New creates a generate.
+func New(r io.Reader) (Generator, error) {
+	g := &generator{}
+	for {
+		err := json.NewDecoder(r).Decode(g)
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return nil, err
+		}
+	}
+	return g, nil
+}

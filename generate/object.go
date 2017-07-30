@@ -14,23 +14,34 @@
 //   limitations under the License.
 //
 
-package schema
+package generate
 
-// Array has a name and a type.
-type Array interface {
+// Object contains a name and a set of fields.
+type Object interface {
+	Acceptor
 	Name() string
-	Type() string
+	Documentation() Text
+	Fields() Fields
 }
 
-type array struct {
-	ArrayName string `json:"Array"`
-	ArrayType string `json:"Type"`
+type object struct {
+	OName          string `json:"Object"`
+	ODocumentation Text   `json:"Documentation"`
+	OFields        Fields `json:"Fields"`
 }
 
-func (a *array) Name() string {
-	return a.ArrayName
+func (o *object) Accept(v Visitor) error {
+	return v.VisitObject(o)
 }
 
-func (a *array) Type() string {
-	return a.ArrayType
+func (o *object) Name() string {
+	return o.OName
+}
+
+func (o *object) Documentation() Text {
+	return o.ODocumentation
+}
+
+func (o *object) Fields() Fields {
+	return o.OFields
 }

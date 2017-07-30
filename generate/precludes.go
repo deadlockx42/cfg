@@ -14,29 +14,8 @@
 //   limitations under the License.
 //
 
-package schema
+package generate
 
-// Schema is a definition of the schema to generate.
-type Schema interface {
-	Copyright() Copyright
-	Begin() string
-	Definitions() Definitions
-}
-
-type schema struct {
-	SchemaCopyright   Copyright    `json:"Copyright"`
-	SchemaBegin       string       `json:"Begin"`
-	SchemaDefinitions *definitions `json:"Definitions"`
-}
-
-func (s *schema) Copyright() Copyright {
-	return s.SchemaCopyright
-}
-
-func (s *schema) Begin() string {
-	return s.SchemaBegin
-}
-
-func (s *schema) Definitions() Definitions {
-	return s.SchemaDefinitions
-}
+// Precludes is an array of strings. If a field has a precludes element
+// this means that the existence of the field precludes those in the list.
+type Precludes []string

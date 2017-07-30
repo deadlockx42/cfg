@@ -14,7 +14,7 @@
 //   limitations under the License.
 //
 
-package schema
+package generate
 
-// Arrays is a map of arrays.
-type Arrays []*array
+// Fields is a slice of field.
+type Fields []*field

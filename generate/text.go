@@ -14,23 +14,7 @@
 //   limitations under the License.
 //
 
-package schema
+package generate
 
-// Object contains a name and a set of fields.
-type Object interface {
-	Name() string
-	Fields() Fields
-}
-
-type object struct {
-	ObjectName   string `json:"Object"`
-	ObjectFields Fields `json:"Fields"`
-}
-
-func (o *object) Name() string {
-	return o.ObjectName
-}
-
-func (o *object) Fields() Fields {
-	return o.ObjectFields
-}
+// Text is simply an array of strings.
+type Text []string

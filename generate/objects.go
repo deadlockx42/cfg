@@ -14,8 +14,16 @@
 //   limitations under the License.
 //
 
-package schema
+package generate
 
-// Precludes is an array of strings. If a field has a precludes element
-// this means that the existence of the field precludes those in the list.
-type Precludes []string
+// Objects is an array of object.
+type Objects []*object
+
+func (o Objects) Accept(v Visitor) error {
+	for _, i := range o {
+		if err := i.Accept(v); err != nil {
+			return err
+		}
+	}
+	return nil
+}
