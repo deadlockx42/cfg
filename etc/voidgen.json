@@ -29,7 +29,6 @@
       ],
       "Fields": [
         { "Field": "Name",          "Type": "string" },
-        { "Field": "Documentation", "Type": "Text" },
         { "Field": "Copyright",     "Type": "Text" },
         { "Field": "Begin",         "Type": "string" },
         { "Field": "Objects",       "Type": "Object" },
