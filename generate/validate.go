@@ -18,14 +18,6 @@ package generate
 
 import "fmt"
 
-type ValidationError struct {
-	string
-}
-
-func (i ValidationError) Error() string {
-	return i.string
-}
-
 type ValidationResults struct {
 	Warnings []string
 	Errors   []string

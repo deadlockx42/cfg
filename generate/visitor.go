@@ -20,14 +20,6 @@ type Acceptor interface {
 	Accept(Visitor) error
 }
 
-type VisitorError struct {
-	string
-}
-
-func (e VisitorError) Error() string {
-	return e.string
-}
-
 type Visitor interface {
 	VisitGenerator(g Generator) error
 	VisitObject(o Object) error
