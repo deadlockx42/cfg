@@ -25,10 +25,6 @@ import (
 	"github.com/deadlockx42/voidgen/generate"
 )
 
-var (
-	verbose bool
-)
-
 func usage() {
 	fmt.Fprintf(os.Stderr, "usage: %s file\n", filepath.Base(os.Args[0]))
 	os.Exit(1)
@@ -48,16 +44,14 @@ func main() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-
-	results, err := generate.Validate(g)
+	r, err := generate.Validate(g)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-
-	for _, w := range results.Warnings {
+	for _, w := range r.Warnings {
 		fmt.Printf("Warning: %s\n", w)
 	}
-	for _, e := range results.Errors {
+	for _, e := range r.Errors {
 		fmt.Printf("Error: %s\n", e)
 	}
 }
