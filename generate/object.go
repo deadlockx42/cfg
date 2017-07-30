@@ -22,12 +22,14 @@ type Object interface {
 	Name() string
 	Documentation() Text
 	Fields() Fields
+	Acceptor() bool
 }
 
 type object struct {
 	OName          string `json:"Object"`
 	ODocumentation Text   `json:"Documentation"`
 	OFields        Fields `json:"Fields"`
+	OAcceptor      bool   `json:"Acceptor"`
 }
 
 func (o *object) Accept(v Visitor) error {
@@ -44,4 +46,8 @@ func (o *object) Documentation() Text {
 
 func (o *object) Fields() Fields {
 	return o.OFields
+}
+
+func (o *object) Acceptor() bool {
+	return o.OAcceptor
 }

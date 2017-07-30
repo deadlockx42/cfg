@@ -34,7 +34,8 @@
         { "Field": "Begin",         "Type": "string" },
         { "Field": "Objects",       "Type": "Object" },
         { "Field": "Arrays",        "Type": "Arrays" }
-      ]
+      ],
+      "Acceptor": true
     },
     {
       "Object": "Object",
@@ -45,8 +46,10 @@
       "Fields": [
         { "Field": "Name",          "Type": "string", "Tag": "Object" },
         { "Field": "Documentation", "Type": "Text" },
-        { "Field": "Fields",        "Type": "Fields" }
-      ]
+        { "Field": "Fields",        "Type": "Fields" },
+        { "Field": "Acceptor",      "Type": "bool" }
+      ],
+      "Acceptor": true
     },
     {
       "Object": "Array",
@@ -58,7 +61,8 @@
         { "Field": "Name",          "Type": "string", "Tag": "Array" },
         { "Field": "Type",          "Type": "string" },
         { "Field": "Documentation", "Type": "Text" }
-      ]
+      ],
+      "Acceptor": true
     },
     {
       "Object": "Field",
