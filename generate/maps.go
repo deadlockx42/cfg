@@ -16,32 +16,38 @@
 
 package generate
 
-type Maps struct {
-	Objects map[string]Object
-	Arrays  map[string]Array
+type genmaps struct {
+	objects map[string]Object
+	arrays  map[string]Array
 }
 
-func NewMaps(g Generator) (*Maps, error) {
-	m := &Maps{
-		Objects: map[string]Object{},
-		Arrays:  map[string]Array{},
-	}
-	if err := g.Accept(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+var maps *genmaps
+
+func init() {
+	initializers = append(initializers, newMaps)
 }
 
-func (*Maps) VisitGenerator(Generator) error {
+func newMaps(g Generator) error {
+	maps = &genmaps{
+		objects: map[string]Object{},
+		arrays:  map[string]Array{},
+	}
+	if err := g.Accept(maps); err != nil {
+		return err
+	}
 	return nil
 }
 
-func (m *Maps) VisitObject(o Object) error {
-	m.Objects[o.Name()] = o
+func (*genmaps) VisitGenerator(Generator) error {
 	return nil
 }
 
-func (m *Maps) VisitArray(a Array) error {
-	m.Arrays[a.Name()] = a
+func (m *genmaps) VisitObject(o Object) error {
+	m.objects[o.Name()] = o
+	return nil
+}
+
+func (m *genmaps) VisitArray(a Array) error {
+	m.arrays[a.Name()] = a
 	return nil
 }

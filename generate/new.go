@@ -21,6 +21,12 @@ import (
 	"io"
 )
 
+type initializer func(Generator) error
+
+var (
+	initializers []initializer
+)
+
 // New creates a generate.
 func New(r io.Reader) (Generator, error) {
 	g := &generator{}
@@ -30,6 +36,11 @@ func New(r io.Reader) (Generator, error) {
 			break
 		}
 		if err != nil {
+			return nil, err
+		}
+	}
+	for _, i := range initializers {
+		if err := i(g); err != nil {
 			return nil, err
 		}
 	}

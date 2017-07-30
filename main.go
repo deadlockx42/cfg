@@ -49,12 +49,7 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	m, err := generate.NewMaps(g)
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-
-	results, err := generate.Validate(g, m)
+	results, err := generate.Validate(g)
 	if err != nil {
 		log.Fatal(err.Error())
 	}

@@ -32,44 +32,37 @@ type ValidationResults struct {
 }
 
 type inputValidator struct {
-	maps    *Maps
 	results *ValidationResults
 }
 
-func Validate(g Generator, m *Maps) (*ValidationResults, error) {
-	if m == nil {
-		return nil, ValidationError{"Validate: nil maps"}
+func Validate(g Generator) (*ValidationResults, error) {
+	r := &ValidationResults{
+		Warnings: []string{},
+		Errors:   []string{},
 	}
-	i := &inputValidator{
-		maps: m,
-		results: &ValidationResults{
-			Warnings: []string{},
-			Errors:   []string{},
-		},
-	}
-	err := g.Accept(i)
-	return i.results, err
+	err := g.Accept(r)
+	return r, err
 }
 
-func (i *inputValidator) VisitGenerator(g Generator) error {
+func (r *ValidationResults) VisitGenerator(g Generator) error {
 	// Warn if the copyright isn't defined.
 	if len(g.Copyright()) == 0 {
-		i.results.Warnings = append(i.results.Warnings, "Empty copyright")
+		r.Warnings = append(r.Warnings, "Empty copyright")
 	}
 	// Error if the begin type isn't defined.
-	if i.maps.Objects[g.Begin()] == nil && i.maps.Arrays[g.Begin()] == nil {
+	if maps.objects[g.Begin()] == nil && maps.arrays[g.Begin()] == nil {
 		e := fmt.Sprintf("Begin type %s not defined", g.Begin())
-		i.results.Errors = append(i.results.Errors, e)
+		r.Errors = append(r.Errors, e)
 	}
 	return nil
 }
 
-func (i *inputValidator) VisitObject(o Object) error {
+func (r *ValidationResults) VisitObject(o Object) error {
 	// TODO
 	return nil
 }
 
-func (i *inputValidator) VisitArray(a Array) error {
+func (r *ValidationResults) VisitArray(a Array) error {
 	// TODO
 	return nil
 }
