@@ -23,9 +23,7 @@ import (
 
 type initializer func(Generator) error
 
-var (
-	initializers []initializer
-)
+var initializers []initializer
 
 // New creates a generate.
 func New(r io.Reader) (Generator, error) {
