@@ -51,7 +51,7 @@ type ValidationResults struct {
 // For an array it will
 //  - warn if the documentation is empty
 //	- error if the name of the array is not a valid identifier
-//	- TODO: error if the type of the array is not defined
+//	- error if the type of the array is not defined
 //
 func Validate(g Generator) (*ValidationResults, error) {
 	r := &ValidationResults{
@@ -69,7 +69,7 @@ func (r *ValidationResults) VisitGenerator(g Generator) error {
 		r.Warnings = append(r.Warnings, "Empty copyright")
 	}
 	// Error if the begin type isn't defined.
-	if maps.objects[g.Begin()] == nil && maps.arrays[g.Begin()] == nil {
+	if !isType(g.Begin()) {
 		r.Errors = append(r.Errors, fmt.Sprintf("Begin %q not defined.", g.Begin()))
 	}
 	return nil
@@ -103,6 +103,10 @@ func (r *ValidationResults) VisitArray(a Array) error {
 	// Warn if the documentation doesn't exist.
 	if len(a.Documentation()) == 0 {
 		r.Warnings = append(r.Warnings, fmt.Sprintf("Documentation for array %q does not exist.", a.Name()))
+	}
+	// Error if the array type isn't defined.
+	if !isType(a.Type()) {
+		r.Errors = append(r.Errors, fmt.Sprintf("Array type %q not defined.", a.Type()))
 	}
 	return nil
 }
@@ -152,4 +156,18 @@ func isIdentifier(s string) bool {
 		}
 	}
 	return true
+}
+
+var types = map[string]bool{
+	"bool": true, "uint8": true, "uint16": true, "uint32": true, "uint64": true,
+	"int8": true, "int16": true, "int32": true, "int64": true, "float32": true,
+	"float64": true, "complex64": true, "complex128": true, "byte": true, "rune": true,
+	"uint": true, "int": true, "uintptr": true, "string": true,
+}
+
+func isType(s string) bool {
+	if maps.objects[s] != nil || maps.arrays[s] != nil {
+		return true
+	}
+	return types[s]
 }
