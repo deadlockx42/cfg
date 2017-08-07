@@ -41,12 +41,11 @@ type ValidationResults struct {
 //	- error if the name of the object is a reserved or predeclared word
 //
 // For each field of an object it will
-//	- TODO: error if the name of the field is not a valid identifier
-//	- TODO: error if the type of the field is not defined
+//	- error if the name of the field is not a valid identifier
+//	- error if the type of the field is not defined
 //
 // For fields with precludes defined it will
 //	- TODO: error if the a field name in precludes does not exist
-//	- TODO: error if the field in the precludes is set
 //
 // For an array it will
 //  - warn if the documentation is empty
@@ -64,11 +63,9 @@ func Validate(g Generator) (*ValidationResults, error) {
 
 // VisitGenerator validates a generator.
 func (r *ValidationResults) VisitGenerator(g Generator) error {
-	// Warn if the copyright isn't defined.
 	if len(g.Copyright()) == 0 {
 		r.Warnings = append(r.Warnings, "Empty copyright")
 	}
-	// Error if the begin type isn't defined.
 	if !isType(g.Begin()) {
 		r.Errors = append(r.Errors, fmt.Sprintf("Begin %q not defined.", g.Begin()))
 	}
@@ -77,34 +74,43 @@ func (r *ValidationResults) VisitGenerator(g Generator) error {
 
 // VisitObject validates a generator object.
 func (r *ValidationResults) VisitObject(o Object) error {
-	name := strings.ToLower(o.Name())
-	// Error if the name of the object is not a valid identifier.
-	if !isIdentifier(name) {
+	if !isName(o.Name()) {
 		r.Errors = append(r.Errors, fmt.Sprintf("Object name %q is not a valid identifier.", o.Name()))
 	}
-	// Error if the name of the object is a reserved or predeclared word.
-	if isReserved(name) || isPredeclared(name) {
-		r.Errors = append(r.Errors, fmt.Sprintf("Object name %q cannot be a reserved or predeclared word.", o.Name()))
-	}
-	// Warn if the documentation doesn't exist.
 	if len(o.Documentation()) == 0 {
 		r.Warnings = append(r.Warnings, fmt.Sprintf("Documentation for object %q does not exist.", o.Name()))
+	}
+	for _, f := range o.Fields() {
+		if !isIdentifier(f.Name()) {
+			r.Errors = append(r.Errors, fmt.Sprintf("Object %q, field name %q is not a valid identifier.", o.Name(), f.Name()))
+		}
+		if !isType(f.Type()) {
+			r.Errors = append(r.Errors, fmt.Sprintf("Object %q, field name %q, type %q not defined.", o.Name(), f.Name(), f.Type()))
+		}
+		for _, p := range f.Precludes() {
+			found := false
+			for _, f := range o.Fields() {
+				if p == f.Name() {
+					found = true
+					break
+				}
+			}
+			if !found {
+				r.Errors = append(r.Errors, fmt.Sprintf("Object %q, field name %q, precludes an unknown field %q.", o.Name(), f.Name(), p))
+			}
+		}
 	}
 	return nil
 }
 
 // VisitArray validates a generator array.
 func (r *ValidationResults) VisitArray(a Array) error {
-	name := strings.ToLower(a.Name())
-	// Error if the name of the array is not a valid identifier.
-	if !isIdentifier(name) {
+	if !isIdentifier(a.Name()) {
 		r.Errors = append(r.Errors, fmt.Sprintf("Array name %q is not a valid identifier.", a.Name()))
 	}
-	// Warn if the documentation doesn't exist.
 	if len(a.Documentation()) == 0 {
 		r.Warnings = append(r.Warnings, fmt.Sprintf("Documentation for array %q does not exist.", a.Name()))
 	}
-	// Error if the array type isn't defined.
 	if !isType(a.Type()) {
 		r.Errors = append(r.Errors, fmt.Sprintf("Array type %q not defined.", a.Type()))
 	}
@@ -138,7 +144,8 @@ func isPredeclared(s string) bool {
 	return predeclared[s]
 }
 
-func isIdentifier(s string) bool {
+func isIdentifier(name string) bool {
+	s := strings.ToLower(name)
 	first := true
 	for _, r := range s {
 		switch first {
@@ -170,4 +177,12 @@ func isType(s string) bool {
 		return true
 	}
 	return types[s]
+}
+
+func isName(s string) bool {
+	name := strings.ToLower(s)
+	if !isIdentifier(name) || isReserved(name) || isPredeclared(name) {
+		return false
+	}
+	return true
 }

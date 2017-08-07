@@ -70,7 +70,7 @@
         "name and type. Optional fields include the tag and precludes. The name is the exported",
         "name and must be capitalized. The type can be a native go type or can be a derived type.",
         "The tag is the name used in the corresponding json to represent the field. And finally",
-        "the precludes is a list of optional field name where those fields cannot be present if",
+        "the precludes is a list of optional field names where those fields cannot be present if",
         "this field is present."
       ],
       "Fields": [
