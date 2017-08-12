@@ -14,7 +14,7 @@
 //   limitations under the License.
 //
 
-package generate
+package schema
 
 // Generator generates go code based on a json definition file.
 type Generator interface {

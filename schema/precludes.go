@@ -14,7 +14,8 @@
 //   limitations under the License.
 //
 
-package generate
+package schema
 
-// Text is simply an array of strings.
-type Text []string
+// Precludes is an array of strings. If a field has a precludes element
+// this means that the existence of the field precludes those in the list.
+type Precludes []string

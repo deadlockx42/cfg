@@ -14,7 +14,7 @@
 //   limitations under the License.
 //
 
-package generate
+package schema
 
 // Object contains a name, documentation, a set of fields and an acceptor flag.
 // Object also satisfies the Acceptor interface allowing a Visitor access.

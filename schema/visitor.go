@@ -14,17 +14,16 @@
 //   limitations under the License.
 //
 
-package generate
+package schema
 
-// Arrays is a map of arrays.
-type Arrays []*array
+// Acceptor allows a visitor to visit.
+type Acceptor interface {
+	Accept(Visitor) error
+}
 
-// Accept allows the visitor to visit all the arrays.
-func (a Arrays) Accept(v Visitor) error {
-	for _, i := range a {
-		if err := i.Accept(v); err != nil {
-			return err
-		}
-	}
-	return nil
+// Visitor can visit a generator, an object or an array.
+type Visitor interface {
+	VisitGenerator(g Generator) error
+	VisitObject(o Object) error
+	VisitArray(a Array) error
 }

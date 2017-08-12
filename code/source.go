@@ -14,17 +14,32 @@
 //   limitations under the License.
 //
 
-package generate
+package code
 
-// Objects is an array of object.
-type Objects []*object
+import (
+	"io"
+	"strings"
 
-// Accept allows the visitor to visit all the objects.
-func (o Objects) Accept(v Visitor) error {
-	for _, i := range o {
-		if err := i.Accept(v); err != nil {
-			return err
-		}
+	"github.com/deadlockx42/voidgen/schema"
+)
+
+type source struct {
+	copyright []string
+	pkg       string
+}
+
+func newSource(pkg string, s schema.Generator) *source {
+	return &source{
+		copyright: s.Copyright(),
+		pkg:       pkg,
 	}
-	return nil
+}
+
+func (s *source) Write(w io.Writer) (n int, err error) {
+	b := ""
+	for _, c := range s.copyright {
+		b += strings.TrimSpace("//   "+c) + "\n"
+	}
+	b += "\npackage " + s.pkg + "\n"
+	return w.Write([]byte(b))
 }

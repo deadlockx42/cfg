@@ -14,7 +14,7 @@
 //   limitations under the License.
 //
 
-package generate
+package schema
 
 type genmaps struct {
 	objects map[string]Object
@@ -24,7 +24,7 @@ type genmaps struct {
 var maps *genmaps
 
 func init() {
-	initializers = append(initializers, newMaps)
+	Initializers = append(Initializers, newMaps)
 }
 
 func newMaps(g Generator) error {

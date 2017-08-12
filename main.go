@@ -23,7 +23,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/deadlockx42/voidgen/generate"
+	"github.com/deadlockx42/voidgen/code"
+	"github.com/deadlockx42/voidgen/schema"
 )
 
 func usage() {
@@ -45,11 +46,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	g, err := generate.New(f)
+	g, err := schema.New(f)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	r, err := generate.Validate(g)
+	r, err := schema.Validate(g)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
@@ -62,7 +63,7 @@ func main() {
 	if len(r.Errors) != 0 {
 		os.Exit(1)
 	}
-	err = generate.Generate(g)
+	err = code.Generate(g)
 	if err != nil {
 		log.Fatal(err.Error())
 	}

@@ -14,35 +14,40 @@
 //   limitations under the License.
 //
 
-package generate
+package code
 
-// Array has a name, a type and documentation. Array also satisfies the
-// Acceptor interface allowing a Visitor access.
-type Array interface {
-	Acceptor
-	Name() string
-	Type() string
-	Documentation() Text
+import (
+	// "fmt"
+	"io"
+	// "strings"
+
+	"github.com/deadlockx42/voidgen/schema"
+)
+
+type arraySrc struct {
+	*source
+	schema schema.Generator
+	array  schema.Array
 }
 
-type array struct {
-	AName          string `json:"Array"`
-	AType          string `json:"Type"`
-	ADocumentation Text   `json:"Documentation"`
+func Array(pkg string, s schema.Generator, a schema.Array) *arraySrc {
+	return &arraySrc{
+		source: &source{
+			copyright: s.Copyright(),
+			pkg:       pkg,
+		},
+		schema: s,
+		array:  a,
+	}
 }
 
-func (a *array) Accept(v Visitor) error {
-	return v.VisitArray(a)
-}
+func (s *arraySrc) Write(w io.Writer) (int, error) {
+	n, err := s.source.Write(w)
+	if err != nil {
+		return n, err
+	}
 
-func (a *array) Name() string {
-	return a.AName
-}
-
-func (a *array) Type() string {
-	return a.AType
-}
-
-func (a *array) Documentation() Text {
-	return a.ADocumentation
+	b := []byte{}
+	// TODO
+	return w.Write(b)
 }

@@ -14,7 +14,7 @@
 //   limitations under the License.
 //
 
-package generate
+package schema
 
 import (
 	"encoding/json"
@@ -24,9 +24,9 @@ import (
 // Initializiers allow for additional functionality to be created as part of the
 // generator construction. To take advantage of this, append an initializer
 // function to the initializers slice in an init() function.
-type initializer func(Generator) error
+type Initializer func(Generator) error
 
-var initializers []initializer
+var Initializers []Initializer
 
 // New creates a generator.
 func New(r io.Reader) (Generator, error) {
@@ -40,7 +40,7 @@ func New(r io.Reader) (Generator, error) {
 			return nil, err
 		}
 	}
-	for _, i := range initializers {
+	for _, i := range Initializers {
 		if err := i(g); err != nil {
 			return nil, err
 		}

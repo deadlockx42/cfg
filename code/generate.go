@@ -14,9 +14,13 @@
 //   limitations under the License.
 //
 
-package generate
+package code
+
+import (
+	"github.com/deadlockx42/voidgen/schema"
+)
 
 // Generate creates the code.
-func Generate(g Generator) error {
+func Generate(g schema.Generator) error {
 	return nil
 }

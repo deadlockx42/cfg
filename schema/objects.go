@@ -14,35 +14,17 @@
 //   limitations under the License.
 //
 
-package generate
+package schema
 
-// Field represents an element of an object. It contains a name, type, tag and precludes.
-type Field interface {
-	Name() string
-	Type() string
-	Tag() string
-	Precludes() Precludes
-}
+// Objects is an array of object.
+type Objects []*object
 
-type field struct {
-	FName      string    `json:"Field"`
-	FType      string    `json:"Type"`
-	FTag       string    `json:"Tag"`
-	FPrecludes Precludes `json:"Precludes"`
-}
-
-func (f *field) Name() string {
-	return f.FName
-}
-
-func (f *field) Type() string {
-	return f.FType
-}
-
-func (f *field) Tag() string {
-	return f.FTag
-}
-
-func (f *field) Precludes() Precludes {
-	return f.FPrecludes
+// Accept allows the visitor to visit all the objects.
+func (o Objects) Accept(v Visitor) error {
+	for _, i := range o {
+		if err := i.Accept(v); err != nil {
+			return err
+		}
+	}
+	return nil
 }
